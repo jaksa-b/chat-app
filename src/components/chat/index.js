@@ -48,6 +48,8 @@ const Chat = () => {
   const submitMessage = (e) => {
     e.preventDefault();
 
+    if (inputMessage === "") return;
+
     sendMessages({
       variables: {
         object: {
