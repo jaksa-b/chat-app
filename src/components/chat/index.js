@@ -2,35 +2,26 @@ import React, { useState, useEffect, useRef } from "react";
 
 import {
   Button,
-  ChatDialogue,
-  ChatDialogueHeader,
-  ChatDialogueBody,
-  ChatDialogueFooter,
   ChatMessage,
   MessageWrapper,
   ChatInput,
   MessageEnd,
 } from "./styles";
 
+import Dialogue from "./Dialogue";
 import { ChatIcon, CloseIcon } from "../icons";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_MESSAGES } from "../../api/query";
 import { SEND_MESSAGE } from "../../api/mutation";
 
 const Chat = () => {
-  const [getMessages, { loading, error, data }] = useLazyQuery(GET_MESSAGES);
   const [sendMessages] = useMutation(SEND_MESSAGE);
+  const [getMessages, { loading, error, data, refetch }] =
+    useLazyQuery(GET_MESSAGES);
 
   const [visible, setVisible] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
+  const [inputMessage, setInputMessage] = useState("");
   const messagesEndRef = useRef(null);
-
-  console.log(loading, error, data);
-
-  const scrollToBottomInit = () => {
-    messagesEndRef.current?.scrollIntoView();
-  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,40 +29,37 @@ const Chat = () => {
 
   useEffect(() => {
     getMessages();
-    scrollToBottomInit();
+    scrollToBottom();
   }, []);
 
   useEffect(() => {
     scrollToBottom();
   }, [scrollToBottom]);
 
-  const showDialoge = () => {
+  const showDialogue = () => {
     setVisible(true);
   };
 
-  const hideDialoge = () => {
+  const hideDialogue = () => {
     setVisible(false);
   };
 
   const submitMessage = (e) => {
-    // post message
     e.preventDefault();
 
-    console.log(message);
-    setMessages([...messages, message]);
-    setMessage("");
-    getMessages();
-    scrollToBottom();
     sendMessages({
       variables: {
         object: {
           senderName: "Viktor",
-          body: message,
+          body: inputMessage,
         },
       },
     })
       .then((res) => {
         console.log(res);
+        refetch();
+        scrollToBottom();
+        setInputMessage("");
       })
       .then((err) => {
         console.log(err);
@@ -79,52 +67,42 @@ const Chat = () => {
   };
 
   const handleInputChange = (e) => {
-    console.log(e.target.value);
-
-    setMessage(e.target.value);
+    setInputMessage(e.target.value);
   };
 
   console.log(data?.messages);
 
   return (
     <div>
-      <Button onClick={showDialoge}>
+      <Button onClick={showDialogue}>
         <ChatIcon fill="white" />
       </Button>
       {visible ? (
-        <ChatDialogue>
-          <ChatDialogueHeader>
-            <CloseIcon onClick={hideDialoge} />
-          </ChatDialogueHeader>
-          <ChatDialogueBody>
-            {data?.messages.map(({ id, body, senderName }) => (
-              <MessageWrapper key={id}>
-                <ChatMessage primary={senderName === "Viktor"}>
-                  {body}
-                </ChatMessage>
-              </MessageWrapper>
-            ))}
-            {messages.map((mess, index) => (
-              <MessageWrapper key={index}>
-                <ChatMessage primary key={index}>
-                  {mess}
-                </ChatMessage>
-              </MessageWrapper>
-            ))}
-
-            <MessageEnd ref={messagesEndRef} />
-          </ChatDialogueBody>
-          <ChatDialogueFooter>
+        <Dialogue
+          header={<CloseIcon onClick={hideDialogue} />}
+          body={
+            <div>
+              {data?.messages.map(({ id, body, senderName }) => (
+                <MessageWrapper key={id}>
+                  <ChatMessage primary={senderName === "Viktor"}>
+                    {body}
+                  </ChatMessage>
+                </MessageWrapper>
+              ))}
+              <MessageEnd ref={messagesEndRef} />
+            </div>
+          }
+          footer={
             <form onSubmit={submitMessage}>
               <ChatInput
                 onChange={handleInputChange}
-                value={message}
-                placeholder="Type your message"
+                value={inputMessage}
+                placeholder="Message"
                 type="text"
               />
             </form>
-          </ChatDialogueFooter>
-        </ChatDialogue>
+          }
+        />
       ) : null}
     </div>
   );

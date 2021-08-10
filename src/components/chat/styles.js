@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../constants";
+import { colors } from "../../helpers/constants";
 
 const Button = styled.a`
   width: 62px;

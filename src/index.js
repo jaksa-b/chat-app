@@ -3,24 +3,8 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  HttpLink,
-} from "@apollo/client";
-
-const link = new HttpLink({
-  uri: "https://guided-ferret-24.hasura.app/v1/graphql",
-  headers: {
-    "x-hasura-admin-secret": "",
-  },
-});
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: link,
-});
+import { ApolloProvider } from "@apollo/client";
+import client from "./api/client";
 
 ReactDOM.render(
   <React.StrictMode>
