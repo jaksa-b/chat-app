@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../constants";
 
-const ChatBubble = styled.a`
+const Button = styled.a`
   width: 62px;
   height: 62px;
   position: fixed;
@@ -60,9 +60,14 @@ const ChatMessage = styled.p`
   color: ${(props) => (props.primary ? "#fff" : colors.text)};
   padding: 15px;
   margin: ${(props) =>
-    props.primary ? "15px 0px 15px 30px" : "15px 30px 15px 0px"};
+    props.primary ? "5px 0px 5px 30px" : "5px 30px 5px 0px"};
   border-radius: 10px;
-  text-align: ${(props) => (props.primary ? "right" : "left")};
+  text-align: left;
+  float: ${(props) => (props.primary ? "right" : "left")};
+`;
+
+const MessageWrapper = styled.div`
+  clear: both;
 `;
 
 const ChatInput = styled.input`
@@ -73,11 +78,11 @@ const ChatInput = styled.input`
 `;
 
 const MessageEnd = styled.div`
-  height: 50px;
+  height: 60px;
 `;
 
 export {
-  ChatBubble,
+  Button,
   ChatIcon,
   ChatDialogue,
   ChatDialogueHeader,
@@ -86,4 +91,5 @@ export {
   ChatMessage,
   ChatInput,
   MessageEnd,
+  MessageWrapper,
 };
