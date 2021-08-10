@@ -8,6 +8,8 @@ import {
   MessageEnd,
 } from "./styles";
 
+import { Avatar, Row, Col } from "../index";
+
 import Dialogue from "./Dialogue";
 import { ChatIcon, CloseIcon } from "../icons";
 import { useLazyQuery, useMutation } from "@apollo/client";
@@ -15,9 +17,8 @@ import { GET_MESSAGES } from "../../api/query";
 import { SEND_MESSAGE } from "../../api/mutation";
 
 const Chat = () => {
+  const [getMessages, { loading, data, refetch }] = useLazyQuery(GET_MESSAGES);
   const [sendMessages] = useMutation(SEND_MESSAGE);
-  const [getMessages, { loading, error, data, refetch }] =
-    useLazyQuery(GET_MESSAGES);
 
   const [visible, setVisible] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
@@ -79,7 +80,19 @@ const Chat = () => {
       </Button>
       {visible ? (
         <Dialogue
-          header={<CloseIcon onClick={hideDialogue} />}
+          header={
+            <Row>
+              <Col>
+                <Avatar active={true} src="/viktor.jpeg" />
+              </Col>
+              <Col>
+                <h2>Viktor</h2>
+              </Col>
+              <Col grow={1}>
+                <CloseIcon onClick={hideDialogue} />
+              </Col>
+            </Row>
+          }
           body={
             <div>
               {data?.messages.map(({ id, body, senderName }) => (
@@ -89,6 +102,7 @@ const Chat = () => {
                   </ChatMessage>
                 </MessageWrapper>
               ))}
+              {loading ? <p>loading...</p> : null}
               <MessageEnd ref={messagesEndRef} />
             </div>
           }
@@ -96,6 +110,7 @@ const Chat = () => {
             <form onSubmit={submitMessage}>
               <ChatInput
                 onChange={handleInputChange}
+                disabled={loading}
                 value={inputMessage}
                 placeholder="Message"
                 type="text"
