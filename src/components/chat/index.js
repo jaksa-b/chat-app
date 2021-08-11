@@ -9,7 +9,7 @@ import {
   MessageEnd,
 } from "./styles";
 
-import { Avatar, Row, Col } from "../index";
+import { Avatar, Row, Col, Flag } from "../index";
 
 import ChatModal from "./ChatModal";
 import { ChatIcon, CloseIcon } from "../icons";
@@ -98,10 +98,21 @@ const Chat = ({ position, buttonColor, user }) => {
               <Avatar active={true} src={user.src} alt={user.name} />
             </Col>
             <Col>
-              <h2>{user.name}</h2>
+              <h2 style={{ display: "inline" }}>{user.name}</h2>
+              <Flag
+                src={`/${user.country}_flag.png`}
+                style={{ marginTop: 2 }}
+              />
             </Col>
             <Col grow={1}>
-              <CloseIcon onClick={hideChatModal} />
+              <CloseIcon
+                onClick={hideChatModal}
+                styl={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                }}
+              />
             </Col>
           </Row>
         }

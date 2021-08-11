@@ -8,6 +8,7 @@ function App() {
         buttonColor="pink"
         user={{
           name: "Kubota",
+          country: "est",
           src: "/kubota.jpeg",
         }}
       />
@@ -16,6 +17,7 @@ function App() {
         username="Viktor"
         user={{
           name: "Viktor",
+          country: "uk",
           src: "/viktor.jpeg",
         }}
       />
