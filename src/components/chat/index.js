@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { upperFirst } from "lodash";
 
 import {
   Button,
@@ -22,6 +23,7 @@ const Chat = ({ position, buttonColor, user }) => {
 
   const [visible, setVisible] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+  const [sendingMessage, setSendingMessage] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -35,7 +37,7 @@ const Chat = ({ position, buttonColor, user }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [scrollToBottom]);
+  });
 
   const showChatModal = () => {
     setVisible(true);
@@ -49,6 +51,7 @@ const Chat = ({ position, buttonColor, user }) => {
     e.preventDefault();
 
     if (inputMessage === "") return;
+    setSendingMessage(true);
 
     sendMessages({
       variables: {
@@ -61,8 +64,9 @@ const Chat = ({ position, buttonColor, user }) => {
       .then((res) => {
         console.log(res);
         refetch();
-        scrollToBottom();
         setInputMessage("");
+        setSendingMessage(false);
+        scrollToBottom();
       })
       .then((err) => {
         console.log(err);
@@ -70,7 +74,7 @@ const Chat = ({ position, buttonColor, user }) => {
   };
 
   const handleInputChange = (e) => {
-    setInputMessage(e.target.value);
+    setInputMessage(upperFirst(e.target.value));
   };
 
   console.log(data?.messages);
@@ -119,8 +123,8 @@ const Chat = ({ position, buttonColor, user }) => {
             <ChatInput
               dataTestId="input"
               onChange={handleInputChange}
-              disabled={loading}
-              value={inputMessage}
+              disabled={sendingMessage}
+              value={sendingMessage ? "Sending..." : inputMessage}
               placeholder="Message"
               type="text"
             />
