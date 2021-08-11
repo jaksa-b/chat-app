@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { colors } from "../../helpers/constants";
 
 const Button = styled.a`
@@ -6,7 +6,6 @@ const Button = styled.a`
   height: 62px;
   position: fixed;
   bottom: 25px;
-  right: 25px;
   border-radius: 50%;
   background: ${colors.primary};
   align-items: center;
@@ -15,6 +14,23 @@ const Button = styled.a`
   cursor: pointer;
   box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
   border: 1px solid ${colors.primary};
+
+  ${(props) =>
+    props.color &&
+    css`
+      background: ${props.color};
+      border: 1px solid ${props.color};
+    `}
+
+  ${(props) =>
+    (props.position === "left" &&
+      css`
+        left: 25px;
+      `) ||
+    (props.position === "right" &&
+      css`
+        right: 25px;
+      `)}
 `;
 
 const ChatIcon = styled.div`
@@ -26,12 +42,21 @@ const ChatModalWrapper = styled.div`
   width: 350px;
   position: fixed;
   bottom: 25px;
-  right: 25px;
   text-align: left;
   background: #fff;
   border-radius: 10px;
   box-shadow: 5px 10px 20px 10px rgba(0, 0, 0, 0.2);
   display: ${(props) => (props.visible ? "initial" : "none")};
+
+  ${(props) =>
+    (props.position === "left" &&
+      css`
+        left: 25px;
+      `) ||
+    (props.position === "right" &&
+      css`
+        right: 25px;
+      `)}
 `;
 
 const ChatModalHeader = styled.div`

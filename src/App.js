@@ -3,7 +3,22 @@ import { Chat } from "./components";
 function App() {
   return (
     <div>
-      <Chat />
+      <Chat
+        position="left"
+        buttonColor="pink"
+        user={{
+          name: "Kubota",
+          src: "/kubota.jpeg",
+        }}
+      />
+      <Chat
+        position="right"
+        username="Viktor"
+        user={{
+          name: "Viktor",
+          src: "/viktor.jpeg",
+        }}
+      />
     </div>
   );
 }

@@ -16,7 +16,7 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_MESSAGES } from "../../api/query";
 import { SEND_MESSAGE } from "../../api/mutation";
 
-const Chat = () => {
+const Chat = ({ position, buttonColor, user }) => {
   const [getMessages, { loading, data, refetch }] = useLazyQuery(GET_MESSAGES);
   const [sendMessages] = useMutation(SEND_MESSAGE);
 
@@ -53,7 +53,7 @@ const Chat = () => {
     sendMessages({
       variables: {
         object: {
-          senderName: "Viktor",
+          senderName: user.name,
           body: inputMessage,
         },
       },
@@ -77,18 +77,24 @@ const Chat = () => {
 
   return (
     <div>
-      <Button dataTestId="button" onClick={showChatModal}>
+      <Button
+        dataTestId="button"
+        color={buttonColor}
+        onClick={showChatModal}
+        position={position}
+      >
         <ChatIcon fill="white" />
       </Button>
       <ChatModal
         visible={visible}
+        position={position}
         header={
           <Row>
             <Col>
-              <Avatar active={true} src="/viktor.jpeg" alt="Viktor" />
+              <Avatar active={true} src={user.src} alt={user.name} />
             </Col>
             <Col>
-              <h2>Viktor</h2>
+              <h2>{user.name}</h2>
             </Col>
             <Col grow={1}>
               <CloseIcon onClick={hideChatModal} />
@@ -99,7 +105,7 @@ const Chat = () => {
           <div>
             {data?.messages.map(({ id, body, senderName }) => (
               <MessageWrapper key={id}>
-                <ChatMessage primary={senderName === "Viktor"}>
+                <ChatMessage primary={senderName === user.name}>
                   {body}
                 </ChatMessage>
               </MessageWrapper>
