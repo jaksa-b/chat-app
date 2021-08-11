@@ -77,7 +77,7 @@ const Chat = () => {
 
   return (
     <div>
-      <Button onClick={showDialogue}>
+      <Button data-testid="button" onClick={showDialogue}>
         <ChatIcon fill="white" />
       </Button>
       {visible ? (
@@ -85,7 +85,7 @@ const Chat = () => {
           header={
             <Row>
               <Col>
-                <Avatar active={true} src="/viktor.jpeg" />
+                <Avatar active={true} src="/viktor.jpeg" alt="Viktor" />
               </Col>
               <Col>
                 <h2>Viktor</h2>
@@ -111,6 +111,7 @@ const Chat = () => {
           footer={
             <form onSubmit={submitMessage}>
               <ChatInput
+                data-testId="input"
                 onChange={handleInputChange}
                 disabled={loading}
                 value={inputMessage}

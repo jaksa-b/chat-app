@@ -21,7 +21,7 @@ const Active = styled.span`
   bottom: 4px;
   right: 2px;
   border: 1px solid white;
-  background: ${(props) => (props.active ? "green" : "greey")};
+  background: ${(props) => (props.active ? "green" : "grey")};
 `;
 
 export { Wrapper, Image, Active };
