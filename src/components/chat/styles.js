@@ -22,7 +22,7 @@ const ChatIcon = styled.div`
   height: 30px;
 `;
 
-const ChatDialogue = styled.div`
+const ChatModalWrapper = styled.div`
   width: 350px;
   position: fixed;
   bottom: 25px;
@@ -33,7 +33,7 @@ const ChatDialogue = styled.div`
   box-shadow: 5px 10px 20px 10px rgba(0, 0, 0, 0.2);
 `;
 
-const ChatDialogueHeader = styled.div`
+const ChatModalHeader = styled.div`
   height: 50px;
   border-radius: 10px 10px 0px 0px;
   padding: 10px;
@@ -41,14 +41,14 @@ const ChatDialogueHeader = styled.div`
   text-align: right;
 `;
 
-const ChatDialogueBody = styled.div`
+const ChatModalBody = styled.div`
   height: 400px;
   padding: 10px;
   background: white;
   overflow-y: scroll;
 `;
 
-const ChatDialogueFooter = styled.div`
+const ChatModalFooter = styled.div`
   height: 50px;
   border-radius: 0px 0px 10px 10px;
   padding: 10px;
@@ -84,10 +84,10 @@ const MessageEnd = styled.div`
 export {
   Button,
   ChatIcon,
-  ChatDialogue,
-  ChatDialogueHeader,
-  ChatDialogueBody,
-  ChatDialogueFooter,
+  ChatModalWrapper,
+  ChatModalHeader,
+  ChatModalBody,
+  ChatModalFooter,
   ChatMessage,
   ChatInput,
   MessageEnd,

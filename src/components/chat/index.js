@@ -10,7 +10,7 @@ import {
 
 import { Avatar, Row, Col } from "../index";
 
-import Dialogue from "./Dialogue";
+import ChatModal from "./ChatModal";
 import { ChatIcon, CloseIcon } from "../icons";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_MESSAGES } from "../../api/query";
@@ -37,11 +37,11 @@ const Chat = () => {
     scrollToBottom();
   }, [scrollToBottom]);
 
-  const showDialogue = () => {
+  const showChatModal = () => {
     setVisible(true);
   };
 
-  const hideDialogue = () => {
+  const hideChatModal = () => {
     setVisible(false);
   };
 
@@ -77,11 +77,11 @@ const Chat = () => {
 
   return (
     <div>
-      <Button dataTestId="button" onClick={showDialogue}>
+      <Button dataTestId="button" onClick={showChatModal}>
         <ChatIcon fill="white" />
       </Button>
       {visible ? (
-        <Dialogue
+        <ChatModal
           header={
             <Row>
               <Col>
@@ -91,7 +91,7 @@ const Chat = () => {
                 <h2>Viktor</h2>
               </Col>
               <Col grow={1}>
-                <CloseIcon onClick={hideDialogue} />
+                <CloseIcon onClick={hideChatModal} />
               </Col>
             </Row>
           }
