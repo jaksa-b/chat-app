@@ -80,48 +80,47 @@ const Chat = () => {
       <Button dataTestId="button" onClick={showChatModal}>
         <ChatIcon fill="white" />
       </Button>
-      {visible ? (
-        <ChatModal
-          header={
-            <Row>
-              <Col>
-                <Avatar active={true} src="/viktor.jpeg" alt="Viktor" />
-              </Col>
-              <Col>
-                <h2>Viktor</h2>
-              </Col>
-              <Col grow={1}>
-                <CloseIcon onClick={hideChatModal} />
-              </Col>
-            </Row>
-          }
-          body={
-            <div>
-              {data?.messages.map(({ id, body, senderName }) => (
-                <MessageWrapper key={id}>
-                  <ChatMessage primary={senderName === "Viktor"}>
-                    {body}
-                  </ChatMessage>
-                </MessageWrapper>
-              ))}
-              {loading ? <p>loading...</p> : null}
-              <MessageEnd ref={messagesEndRef} />
-            </div>
-          }
-          footer={
-            <form onSubmit={submitMessage}>
-              <ChatInput
-                dataTestId="input"
-                onChange={handleInputChange}
-                disabled={loading}
-                value={inputMessage}
-                placeholder="Message"
-                type="text"
-              />
-            </form>
-          }
-        />
-      ) : null}
+      <ChatModal
+        visible={visible}
+        header={
+          <Row>
+            <Col>
+              <Avatar active={true} src="/viktor.jpeg" alt="Viktor" />
+            </Col>
+            <Col>
+              <h2>Viktor</h2>
+            </Col>
+            <Col grow={1}>
+              <CloseIcon onClick={hideChatModal} />
+            </Col>
+          </Row>
+        }
+        body={
+          <div>
+            {data?.messages.map(({ id, body, senderName }) => (
+              <MessageWrapper key={id}>
+                <ChatMessage primary={senderName === "Viktor"}>
+                  {body}
+                </ChatMessage>
+              </MessageWrapper>
+            ))}
+            {loading ? <p>loading...</p> : null}
+            <MessageEnd ref={messagesEndRef} />
+          </div>
+        }
+        footer={
+          <form onSubmit={submitMessage}>
+            <ChatInput
+              dataTestId="input"
+              onChange={handleInputChange}
+              disabled={loading}
+              value={inputMessage}
+              placeholder="Message"
+              type="text"
+            />
+          </form>
+        }
+      />
     </div>
   );
 };

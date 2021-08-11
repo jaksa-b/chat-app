@@ -31,6 +31,7 @@ const ChatModalWrapper = styled.div`
   background: #fff;
   border-radius: 10px;
   box-shadow: 5px 10px 20px 10px rgba(0, 0, 0, 0.2);
+  display: ${(props) => (props.visible ? "initial" : "none")};
 `;
 
 const ChatModalHeader = styled.div`

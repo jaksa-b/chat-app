@@ -6,9 +6,9 @@ import {
   ChatModalFooter,
 } from "./styles";
 
-const ChatModal = ({ header, body, footer }) => {
+const ChatModal = ({ visible, header, body, footer }) => {
   return (
-    <ChatModalWrapper>
+    <ChatModalWrapper visible={visible}>
       <ChatModalHeader>{header}</ChatModalHeader>
       <ChatModalBody>{body}</ChatModalBody>
       <ChatModalFooter>{footer}</ChatModalFooter>
