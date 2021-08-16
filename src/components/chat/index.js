@@ -33,7 +33,7 @@ const Chat = ({ position, buttonColor, user }) => {
   useEffect(() => {
     getMessages();
     scrollToBottom();
-  }, []);
+  }, [getMessages]);
 
   useEffect(() => {
     scrollToBottom();
